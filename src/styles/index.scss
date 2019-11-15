@@ -15,6 +15,15 @@ html {
   box-sizing: border-box;
 }
 
+ul,ol,li{
+  margin:0;
+  padding:0;
+}
+
+li{
+  list-style: none;
+}
+
 *,
 *:before,
 *:after {
@@ -87,7 +96,7 @@ a:hover {
 .pagination-container {
   display: inline-block;
   float: right;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 //添加、更新表单样式
@@ -155,4 +164,74 @@ a:hover {
 .color-info {
   color: #909399;
 }
-
+//input 宽度
+.input-width {
+  width: 222px;
+}
+.input-width5{
+  width:500px;
+}
+.input-width6{
+  width:800px;
+}
+//textarea 宽度
+.tx_area{
+  width:800px;
+}
+//
+.ml1zero{
+  margin-left:1%;
+}
+//margin
+.mt1em{
+  margin: 1.3em  0 0!important;
+}
+.ml10{
+  margin-left:10px;
+}
+.mt15{
+  margin-top: 15px;
+}
+.mt20{
+  margin:20px 0;
+}
+.mb10{
+  margin-bottom:10px;
+}
+.mb20{
+  margin-bottom:20px;
+}
+//位置
+.m_auto{ 
+  margin: 0 auto;
+}
+.m_tx{
+  margin: 0 auto;
+  text-align: center;
+}
+//文本
+.tx{
+  text-align:center;
+}
+.tl{
+  text-align:left;
+}
+.tr{
+  text-align:right;
+}
+// btn 位置
+.btn_m20{
+  margin: 0 0 20px;
+}
+//fix-bug
+.el-form-item__content{
+  line-height:1 !important;
+}
+.el-radio-button__inner, .el-radio-group{
+  line-height:50px !important;
+}
+//自适应width
+.auto100{
+  width:100%;
+  clear:both;
+}

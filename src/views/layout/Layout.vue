@@ -13,9 +13,9 @@ import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
-  name: 'layout',
+  name: 'layout', 
   components: {
-    Navbar,
+    Navbar, 
     Sidebar,
     AppMain
   },

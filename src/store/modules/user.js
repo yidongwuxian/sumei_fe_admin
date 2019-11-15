@@ -1,11 +1,13 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { resetPwd } from '@/api/system'
+import { getToken, setToken, removeToken, setUserName, removeUserName, setRoles,removeRoles } from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
     avatar: '',
+    auth: false,
     roles: []
   },
 
@@ -20,20 +22,26 @@ const user = {
       state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
-      state.roles = roles
+      state.roles = roles;
+      state.auth  = true;
     }
   },
 
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+      const username = userInfo.name.trim();
+      const password = userInfo.password.trim();
+      
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          const tokenStr = data.tokenHead+data.token
-          setToken(tokenStr)
+        login(username, password).then(response => {
+          const tokenStr = response.token_type+" "+response.access_token;
+          setToken(tokenStr);
           commit('SET_TOKEN', tokenStr)
+          //username
+          const nameStr = response.user_name;
+          setUserName(nameStr)
+          commit('SET_NAME', nameStr)
           resolve()
         }).catch(error => {
           reject(error)
@@ -41,32 +49,50 @@ const user = {
       })
     },
 
+    //修改密码
+    ResetPwd({ commit }, state) {
+        return new Promise((resolve, reject) => {
+            resetPwd(state).then(response => {
+            const tokenStr = response.token_type+" "+response.access_token;
+            setToken(tokenStr);
+            commit('SET_TOKEN', tokenStr)
+            //username
+            const nameStr = response.user_name;
+            setUserName(nameStr)
+            commit('SET_NAME', nameStr)
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+        })
+    },
+
     // 获取用户信息
-    GetInfo({ commit, state }) {
+     // 获取用户信息
+     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
-          commit('SET_NAME', data.username)
-          commit('SET_AVATAR', data.icon)
-          resolve(response)
+        getInfo({}).then(response => {
+          setRoles(response);
+          commit('SET_ROLES', response)
+          resolve()
         }).catch(error => {
           reject(error)
         })
       })
     },
 
+
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
+          commit('SET_NAME', '')
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
+          commit('SET_ROUTERS', [])
+          removeUserName()
           removeToken()
+          removeRoles()
           resolve()
         }).catch(error => {
           reject(error)
@@ -75,14 +101,23 @@ const user = {
     },
 
     // 前端 登出
-    FedLogOut({ commit }) {
-      return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resolve()
-      })
+    FedLogOut({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        logout(state.token).then(() => {
+          commit('SET_NAME', '')
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          commit('SET_ROUTERS', [])
+          removeUserName()
+          removeToken()
+          removeRoles()
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      }) 
     }
   }
-}
+}  
 
 export default user

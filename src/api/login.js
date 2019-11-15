@@ -1,26 +1,27 @@
 import request from '@/utils/request'
-
-export function login(username, password) {
+//登入
+export function login(name, password) {
   return request({
-    url: '/admin/login',
+    url: '/login',
     method: 'post',
     data: {
-      username,
+      name,
       password
     }
   })
 }
-
-export function getInfo() {
+//左侧菜单栏
+export function getInfo(params) {
   return request({
-    url: '/admin/info',
-    method: 'get',
+    url:'/menus',
+    method:'get',
+    params:params
   })
 }
-
+//登出
 export function logout() {
   return request({
-    url: '/admin/logout',
+    url: '/logout',
     method: 'post'
   })
 }

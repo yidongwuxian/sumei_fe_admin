@@ -5,10 +5,15 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 
 exports.assetsPath = function (_path) {
-  const assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
+  let assetsSubDirectory = ''
 
+  if (process.env.NODE_ENV === 'production') {
+    assetsSubDirectory = config.build.assetsSubDirectory
+  } else if (process.env.NODE_ENV === 'test') {
+    assetsSubDirectory = config.test.assetsSubDirectory
+  } else {
+    assetsSubDirectory = config.dev.assetsSubDirectory
+  }
   return path.posix.join(assetsSubDirectory, _path)
 }
 
@@ -18,6 +23,7 @@ exports.cssLoaders = function (options) {
   const cssLoader = {
     loader: 'css-loader',
     options: {
+      minimize: process.env.NODE_ENV === ('production'||'test'),
       sourceMap: options.sourceMap
     }
   }
@@ -47,6 +53,7 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
+        publicPath: '../../',
         fallback: 'vue-style-loader'
       })
     } else {

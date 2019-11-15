@@ -3,10 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>sumei_fe_admin</title>
+    <script type="text/javascript">
+    function initScript(){
+      const protocolStr = document.location.protocol
+      switch (protocolStr) {
+        case 'https:':
+          window.HOST_TYPE = '2'
+          break
+        default:
+          break
+      }
+      var script = document.createElement("script");
+      script.src = "//api.map.baidu.com/getscript?v=2.0&ak=52c294eb080289588ff8768a503f2cc3";
+      document.body.appendChild(script);
+    }
+    window.onload = initScript; 
+    </script>
+    <title>速美超级家后台CMS管理系统</title>
   </head>
-  <body>
+  <body>  
     <div id="app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>
+ 

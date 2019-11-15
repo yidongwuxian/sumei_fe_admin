@@ -52,3 +52,60 @@ export function formatTime(time, option) {
     return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
   }
 }
+
+export function removeEmptyObject(object){
+  for (var i in object) {
+  var value = object[i];
+  if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        if (value.length == 0) {
+            delete object[i];
+            continue;
+        }
+      }
+      removeEmptyObject(value);
+      //按需添加
+      if (isEmpty(value)) {
+        delete object[i];
+      }
+  } else {
+      if (value === '' || value === null || value === undefined) {
+          delete object[i];
+      } else {
+        }
+      }
+  }
+  return object;
+}
+//是否为空
+function isEmpty(object) {
+  for (var name in object) {
+    return false;
+  }
+  return true;
+}
+
+export function toSortVal(str){
+  let val = "";
+  if(str === "descending"){
+    val = "desc";
+  }else{
+    val = "asc";
+  }
+  return val;
+}
+
+//去重数组
+export function uniqueArr(arr) {
+  return Array.from(new Set(arr))
+}
+
+//去重数组
+export function removeAwayPic(str) {
+  let tempStr = '';
+  let StrA    = str.replace(/\[|]/g,'');
+  let StrB    =  StrA.replace("\"","").replace("\"","");
+  tempStr     = StrB + "!ps2";
+  
+  return  tempStr;
+}

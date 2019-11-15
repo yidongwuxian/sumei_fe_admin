@@ -6,10 +6,22 @@ const sourceMapEnabled = isProduction
   ? config.build.productionSourceMap
   : config.dev.cssSourceMap
 
+function getSourchMap(env) {
+  if (env === "production") {
+    return config.build.productionSourceMap
+  } else if (env === "test") {
+    return config.test.testSourceMap
+  } else {
+    return config.dev.cssSourceMap
+  }
+}
+
 module.exports = {
   loaders: utils.cssLoaders({
-    sourceMap: sourceMapEnabled,
-    extract: isProduction
+    // sourceMap: sourceMapEnabled,
+    // extract: isProduction
+    sourceMap: getSourchMap(process.env.NODE_ENV),
+    extract: process.env.NODE_ENV === ('production'||'test')
   }),
   cssSourceMap: sourceMapEnabled,
   cacheBusting: config.dev.cacheBusting,
