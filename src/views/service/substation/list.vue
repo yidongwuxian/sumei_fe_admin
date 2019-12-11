@@ -37,7 +37,7 @@
                 <template slot-scope="scope" v-if="scope.row.site">{{scope.row.site.name}}</template>
               </el-table-column>
               <el-table-column label="模板名称" width="300">
-                <template slot-scope="scope" v-if="scope.row.templates">{{scope.row.templates.name}}</template>
+                <template slot-scope="scope" v-if="scope.row.templates"><a href="javascript:;" @click="jumpLink(scope.row.preview_url)">{{scope.row.templates.name}}</a></template>
               </el-table-column>
               <el-table-column label="备注" width="180" align="center">
                 <template slot-scope="scope" v-if="scope.row.templates">{{scope.row.templates.remark}}</template>
@@ -211,6 +211,12 @@
           this.list = res.data; 
           this.total = res.total;
         });
+      },
+      //跳转到外链
+      jumpLink(url){
+        const protocolStr = document.location.protocol;
+        let newUrl = protocolStr + url
+        window.open(newUrl);
       },
       //删除其中一行
       delList(id){ 

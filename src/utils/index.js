@@ -109,3 +109,53 @@ export function removeAwayPic(str) {
   
   return  tempStr;
 }
+
+//是否有效值
+export function isVirtualVal(value){
+  if (value != '' && value != null && value != undefined) {
+    value = true;
+  }else{
+    value = false;
+  }
+  return value;
+}
+
+//转义导出Excel文件名称
+export function transferExcelName(str){
+  let val = '';
+  switch(str) {
+    case 'store':
+       val = '门店';
+       break;
+    case 'subject':
+       val = '案例';
+       break;
+    case 'building':
+        val = '楼盘';
+        break;  
+    case 'construction':
+      val = '工地';
+      break;
+    case 'constructionTeam':
+      val = '工队';
+      break;
+    case 'story':
+        val = '线上课程';
+        break;     
+    case 'course':
+      val = '线下课程';
+      break;
+    case 'special':
+      val = '专题';
+      break;
+    case 'activity':
+        val = '活动';
+        break;
+    case 'friendLink':
+        val = '友链';
+        break;
+    default:
+       break;
+  } 
+  return val;
+}

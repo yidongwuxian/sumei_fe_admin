@@ -92,7 +92,7 @@
                     <img v-if="tempCover" :src="tempCover" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                  <p>图片建议尺寸：370*196px，图片格式：jpg，png，gif，大小：5M以内</p>
+                  <p>图片建议尺寸：882*470px，图片格式：jpg，png，gif，大小：5M以内</p>
               </el-form-item>
               <el-form-item label="坐标:" required>
                   <el-input v-model="latlng" placeholder="坐标" :disabled="true"></el-input>

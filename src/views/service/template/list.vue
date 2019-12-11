@@ -28,7 +28,7 @@
                 <template slot-scope="scope">{{scope.row.id}}</template>
               </el-table-column>
               <el-table-column label="模板名称" width="354">
-                <template slot-scope="scope"><a href="javascript:;" @click="jumpLink(scope.row.preview_url)">{{scope.row.name}}</a></template>
+                <template slot-scope="scope">{{scope.row.name}}</template>
               </el-table-column>
               <el-table-column label="备注" width="354">
                 <template slot-scope="scope">{{scope.row.remark}}</template>
@@ -124,12 +124,6 @@
       },
       changeRemark(val){
         this.listPageFilter.remark = val;
-      },
-      //跳转到外链
-      jumpLink(url){
-        const protocolStr = document.location.protocol;
-        let newUrl = protocolStr + url
-        window.open(newUrl);
       },
       //跳转到新增页
       addList(){

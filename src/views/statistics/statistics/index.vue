@@ -1,105 +1,187 @@
 <template> 
   <div class="app-container">
-     <el-form :inline="true" :model="listPageFilter" size="small" label-width="100px">
-        <el-form-item label="搜索条件：">
-            <el-select v-model="listPageFilter.typestatus" placeholder="选择分类" clearable class="input-width">
-              <el-option v-for="item in typeOptions"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id">
-              </el-option>
-            </el-select>
-            <el-select v-model="listPageFilter.timestatus" placeholder="时间类别" clearable class="input-width">
-              <el-option
-                v-for="item in timeStatus"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <el-date-picker
-              v-model="dateRange"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              format="yyyy 年 MM 月 dd 日"
-              value-format="yyyy-MM-dd">
-            </el-date-picker>
-        </el-form-item>
-        <button type="button" class="el-button search-button el-button--primary el-button--small" style="margin-left: 20px;" @click="searchFilter">
-            <span>搜索</span>
-        </button>
-      </el-form>
-    <div id="myChart" class="my_chart"></div>
+    <StatisFilter v-on:searchResult="searchResult" v-on:exportExcFn="exportExcFn"></StatisFilter>
+    <div ref="myChart" class="my_chart"></div>
   </div>
 </template>
 <script>
-
+  import { getToken } from '@/utils/auth';
+  import { transferExcelName } from '@/utils/index';
+  import { statiList } from '@/api/statistics';
+  import fileDownload from 'js-file-download'
+  import StatisFilter from '@/components/StatisFilter/index';
   export default {
     name: "dataList",
-    components:{
-
-    },
     data() {
       return {
-        dateRange: "",
-        typeOptions:[
-          {
-              "id": 1,
-              "name": '专题'
-          },
-        ],
-        timeStatus:[
-          {
-              "value": 1,
-              "label": '添加时间'
-          },
-          {
-              "value": 2,
-              "label": '修改时间'
-          }
-        ],
-        listPageFilter:{
-          typestatus: '',
-          timestatus: '',
-          start_time: '',
-          end_time: ''
-        }
+        isMap: false,
+        dataArr: [],
+        xAxisArr: [],
+        seriesArr: [],
       }
     },
-    mounted(){
-      this.drawLine();
+    components:{
+      StatisFilter
     },
-    methods: {
-      drawLine(){
-          // 基于准备好的dom，初始化echarts实例
-          let myChart = this.$echarts.init(document.getElementById('myChart'))
-          // 绘制图表
-          myChart.setOption({
-              tooltip: {},
-              xAxis: {
-                  data: ["总部","北京","上海","天津","沈阳","西安","石家庄","郑州","青岛","武汉","长沙","南京","南宁","成都","昆明","宁波","深圳","无锡","杭州","苏州","金华","兰州","东莞","佛山","重庆","大连","德州","唐山","秦皇岛"]
-              },
-              yAxis: {},
-              series: [{
-                  name: '销量',
-                  type: 'bar',
-                  data: [48, 97, 20, 40, 33, 80,26,6,38,86,20,70,20,56,35,39,38,46,72,17,5,3,34,17,56,2,12,14,12]
-              }]
-          });
+    methods: { 
+      //绘制图
+      drawMap(picName){
+          let mChart = this.$refs.myChart;
+          if(mChart){
+            let myChart = this.$echarts.init(mChart);
+            // 绘制图表
+            let option = {
+                tooltip: { trigger: 'axis' },
+                toolbox: {
+                    show: true,
+                    x: 'middle', 
+                    feature: {
+                        //控制是否出现数据视图
+                        dataView: {
+                            show: true,
+                            readOnly: true,
+                            lang: ["", "关闭"]
+                        },
+                        magicType: {
+                            show: true,
+                            //控制是否出现切换折线图和柱状图
+                            type: ['line', 'bar']
+                        },
+                        //保存为图片配置项
+                        saveAsImage: { 
+                          show: true, 
+                          name: transferExcelName(picName)
+                        },
+                    }
+                },
+                xAxis: [
+                  { 
+                    type: 'category',
+                    axisLabel: {  
+                      interval:0,  
+                      rotate:40  
+                    },  
+                    data: this.xAxisArr
+                  }
+                ],
+                yAxis: [
+                    { type: 'value' }
+                ],
+                grid: {
+                    left: '10%',
+                    bottom: '35%'
+                },
+                series: [
+                       {
+                        name: '数量',
+                        type: 'bar',
+                        data: this.seriesArr, 
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside'
+                            }
+                        },
+                        markLine: {
+                            data: [
+                              { 
+                                type: 'average', 
+                                name: '平均值',
+                                lineStyle: {
+                                    color: 'black'
+                                } 
+                              }
+                            ]
+                        }
+                    }
+                ],
+                optionToContent: function(opt) { 
+                    //设置数据视图的样式
+                    var axisData = opt.xAxis[0].data;
+                    var series = opt.series;
+                    var table = '<table id="tableExcel_Day" border="1" style="text-align:center;border-collapse:collapse;"  class="table_Qushi"><tbody><tr>' +
+                    '<th>站点</th>';
+                    for (var i = 0; i < series.length; i++) {
+                    table += '<th>' + series[i].name + '</th>';
+                    }
+            
+                    table += '</tr>';
+                    for (var i = 0, l = axisData.length; i < l; i++) {
+                    table += '<tr>' +
+                        '<td>' + axisData[i] + '</td>' +
+                        '<td>' + series[0].data[i] + '</td>' +
+                        '</tr>';
+                    }
+                    table += '</tbody></table>';
+                    return table;
+                },
+                // 数据视图刷新的方法
+                contentToOption: function(HTMLDomElement,opt) {
+                return opt;
+                }
+            };
+            myChart.clear();
+            myChart.setOption(option)
+          }
       },
-      searchFilter(){
-        //dateRange
-        this.listPageFilter.start_time = this.dateRange[0];
-        this.listPageFilter.end_time   = this.dateRange[1];
+      //搜索条件
+      searchResult(val){
+        //获取列表  
+        statiList(val).then(res => {
+          this.xAxisArr = [];
+          this.seriesArr = [];
+          this.dataArr = res;
+          if(this.dataArr.length > 0){
+            for(let item of this.dataArr){
+                if(item.site){
+                  this.xAxisArr.push(item.site.name);
+                }
+                this.seriesArr.push(item.total);   
+            }
+          }else{
+            this.xAxisArr = [];
+            this.seriesArr = [];
+          }
+          //下载图片命名规范 -- 类别名称.png
+          if(val.module){
+            this.drawMap(val.module);
+          }else{
+            this.drawMap('数据统计');
+          }
+        });
+      },
+      //导出数据表
+      exportExcFn(val){
+        //获取列表  
+        this.$axios.get(process.env.API_BASEURL+'/statistics/export', {
+          params: val,
+          responseType: 'arraybuffer',
+          headers:{
+            'Authorization': getToken(), 
+            'Content-Type': 'application/json;charset=UTF-8'
+          }  
+        })
+        .then(function (res) {
+          let categoryName = '';
+          let excelDate = '';
+          if(res.config.params && res.config.params.module !=""){
+            categoryName = '_'+ transferExcelName(res.config.params.module);
+          }
+          if(res.config.params && (res.config.params.start_time || res.config.params.end_time) ){
+            excelDate    = '_'+ res.config.params.start_time + '_' + res.config.params.end_time;
+          }
+          //下载Excel命名规则 -- SM_CMS_类别名称_(2019-1-1至2019-1-3)
+          fileDownload(res.data, 'SM_CMS'+ categoryName + excelDate +'.xlsx')
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       }
     }
   }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .my_chart{
-  width: 100%; 
   height: 800px;
 }
 </style>
