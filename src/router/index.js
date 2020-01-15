@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+//import Vue from 'vue'
+// import Router from 'vue-router'
 
-Vue.use(Router)
+// Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
@@ -541,7 +541,7 @@ export const constantRouterMap = [
   },
   {path: '*', redirect: '/404', hidden: true}
 ]
-export default new Router({
+export default new VueRouter({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap

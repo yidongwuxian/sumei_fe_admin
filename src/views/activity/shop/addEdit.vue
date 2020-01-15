@@ -95,8 +95,8 @@
 <script>
   import  MapComp from '@/components/MapComp/map';
   import { getToken } from '@/utils/auth';
-  import { quillEditor } from "vue-quill-editor";
-  import * as Quill from "quill";
+  // import { quillEditor } from "vue-quill-editor";
+  // import * as Quill from "quill";
   import {siteNameList, provincesList} from '@/api/public';
   import {addActList, editActView, editActList} from '@/api/activity';
   import { Message } from 'element-ui';
@@ -104,8 +104,8 @@
   export default {
     name:'addEdit',
     components:{
-      MapComp,
-      quillEditor
+      MapComp
+      //quillEditor
     },
     data() {
       return {

@@ -72,7 +72,7 @@
   </div>
 </template>
 <script>
-  import $ from 'jquery';
+  //import $ from 'jquery';
   import { getToken } from '@/utils/auth';
   import {siteNameList} from '@/api/public';
   import {addTempList, editTempView, editTempList} from '@/api/service';

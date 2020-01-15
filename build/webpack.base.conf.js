@@ -24,7 +24,15 @@ module.exports = {
     app: './src/main.js'
   },
   externals: {
-    'BaiduMap': 'BMap'
+    'BaiduMap': 'BMap',
+    'vue': 'Vue',
+    'vuex': 'Vuex',
+    'vue-router': 'VueRouter',
+    'axios': 'axios',
+    'vue-quill-editor': 'VueQuillEditor',
+    'Quill':'quill',
+    $: "jquery",
+    'echarts': 'echarts'
   },
   output: {
     path: config.build.assetsRoot,

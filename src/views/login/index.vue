@@ -34,7 +34,6 @@
 
 <script>
   import {isvalidUsername} from '@/utils/validate';
-  import login_center_bg from '@/assets/images/login_center_bg.png'
 
   export default {
     name: 'login',
@@ -57,7 +56,7 @@
         },
         loading: false,
         pwdType: 'password',
-        login_center_bg
+        login_center_bg: 'https://jc2.sumeihome.cn/sumeiV2/admin/images/login_center_bg.png'
       }
     },
 

@@ -99,7 +99,7 @@
     </div>
   </template>
   <script>
-    import $ from 'jquery'
+    //import $ from 'jquery'
     import {uniqueArr,parseTime} from '@/utils/index';
     import { getToken } from '@/utils/auth';
     import {siteNameList, provincesList} from '@/api/public';

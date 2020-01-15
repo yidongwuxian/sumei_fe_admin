@@ -126,15 +126,15 @@ import {
   editUnlineCourseView,
   editUnlineCourseList
 } from "@/api/substance";
-import { quillEditor } from "vue-quill-editor";
-import * as Quill from "quill";
+// import { quillEditor } from "vue-quill-editor";
+// import * as Quill from "quill";
 import { Message } from "element-ui";
 import Router from "@/router/index";
 export default {
   name: "addEdit",
   components: {
-    MapComp,
-    quillEditor
+    MapComp
+    //quillEditor
   },
   data() {
     return {

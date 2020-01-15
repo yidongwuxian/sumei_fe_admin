@@ -112,6 +112,12 @@
               <el-table-column label="浏览量" width="80" align="center">
                 <template slot-scope="scope">{{scope.row.view_num}}</template>
               </el-table-column>
+              <el-table-column label="UV浏览量" width="100" align="center">
+                <template slot-scope="scope">{{scope.row.user_view_num}}</template>
+              </el-table-column>
+              <el-table-column label="IP浏览量" width="100" align="center">
+                <template slot-scope="scope">{{scope.row.ip_view_num}}</template>
+              </el-table-column>
               <el-table-column label="修改时间" width="180" align="center">
                  <template slot-scope="scope">{{scope.row.updated_at}}</template>
               </el-table-column>
@@ -218,6 +224,11 @@
     created(){
       this.getSiteId();
       this.getData();    
+    },
+    watch: {
+      'listPageFilter.story_type': function (newValue, oldValue) {
+          this.listPageFilter.column_id = null
+      }
     },
     filters:{
       formatStatus(num){
@@ -357,6 +368,7 @@
           }
       },
       changeColumnId(val){
+        this.$forceUpdate();
         this.listPageFilter.column_id = val;
       },
       //获取文章模块

@@ -10,7 +10,8 @@
     "develop": "node build/develop.js",
     "test": "node build/test.js",
     "prev": "node build/prev.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "report": "npm run build --report=true"
   },
   "dependencies": {
     "axios": "^0.18.0",

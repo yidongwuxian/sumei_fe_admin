@@ -144,8 +144,8 @@ import Stags from "@/components/Tags/index";
 import { uniqueArr } from "@/utils/index";
 import { tagsList } from "@/api/tags";
 import { getToken } from "@/utils/auth";
-import { quillEditor } from "vue-quill-editor";
-import * as Quill from "quill";
+// import { quillEditor } from "vue-quill-editor";
+// import * as Quill from "quill";
 import { siteNameList } from "@/api/public";
 import {
   addOnlineCourseList,
@@ -158,8 +158,8 @@ import Router from "@/router/index";
 export default {
   name: "addEdit",
   components: {
-    Stags,
-    quillEditor
+    Stags
+    //quillEditor
   },
   data() {
     return {

@@ -87,7 +87,13 @@
                 <template slot-scope="scope">{{scope.row.sign_num}}</template>
               </el-table-column>
               <el-table-column label="浏览量" width="100" align="center">
-                <template slot-scope="scope">{{scope.row.views_num}}</template>
+                <template slot-scope="scope">{{scope.row.view_num}}</template>
+              </el-table-column>
+              <el-table-column label="UV浏览量" width="100" align="center">
+                <template slot-scope="scope">{{scope.row.user_view_num}}</template>
+              </el-table-column>
+              <el-table-column label="IP浏览量" width="100" align="center">
+                <template slot-scope="scope">{{scope.row.ip_view_num}}</template>
               </el-table-column>
               <el-table-column label="站点" width="80" align="center">
                 <template slot-scope="scope" v-if="scope.row.site">{{scope.row.site.name}}</template>

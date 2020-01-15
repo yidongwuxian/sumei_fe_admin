@@ -329,6 +329,11 @@
        created() {
           this.listPageFilter.module = this.typeOptions[0].name; 
        },
+       watch: {
+          'listPageFilter.story_type': function (newValue, oldValue) {
+              this.listPageFilter.column_id = null
+          }
+       },
        methods: {
           //搜索类别
           changeModule(val){
@@ -432,11 +437,12 @@
           },
           //获取栏目
           changeColumn(val){
-          if(val){
+            if(val){
               this.getTypesId();  
             }
           },
           changeColumnId(val){
+            this.$forceUpdate();
             this.listPageFilter.column_id = val;
           },
           //获取文章模块

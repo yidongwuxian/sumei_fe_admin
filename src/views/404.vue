@@ -15,15 +15,12 @@
     </div>
   </div>
 </template>
-
 <script>
-  import img_404 from '@/assets/images/gif_404.gif';
-
   export default {
     name: 'wrongPage',
     data() {
       return {
-        img_404
+        img_404: 'https://jc2.sumeihome.cn/sumeiV2/admin/images/gif_404.gif'
       }
     },
     methods: {

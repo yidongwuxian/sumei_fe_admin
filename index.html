@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.core.css"/>
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.snow.css"/>
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.bubble.css"/>
     <script type="text/javascript">
     function initScript(){
       const protocolStr = document.location.protocol
@@ -23,6 +26,21 @@
   </head>
   <body>  
     <div id="app"></div>
+    <script src="https://unpkg.com/vue@2.5.2/dist/vue.min.js"></script> 
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js"></script>
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+    <script src="/static/js/vue-quill-editor/v3.0.6/quill.min.js"></script>
+    <script src="/static/js/vue-quill-editor/v3.0.6/vue-quill-editor.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/echarts@4.2.1/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+      Vue.use(window.VueRouter);
+      Vue.use(window.VueQuillEditor);
+      Vue.prototype.$echarts = window.echarts;
+      Vue.prototype.$axios = window.axios;
+      Vue.prototype.$store = window.vuex;
+    </script>
   </body>
 </html>
  
