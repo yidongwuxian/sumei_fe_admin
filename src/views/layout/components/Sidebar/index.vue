@@ -13,24 +13,31 @@
     </el-menu>
   </scroll-bar>
 </template>
-
+  
 <script>
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 
 export default {
+  data() { 
+    return {
+      routes: []
+    }
+  },
   components: { SidebarItem, ScrollBar },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
-    routes() {
-      return this.$router.options.routes
-    },
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  created(){
+    this.routes = this.$store.state.permission.addRouters; 
+  },
+  methods:{
   }
 }
 </script>

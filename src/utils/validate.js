@@ -1,6 +1,5 @@
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'test']
-  return valid_map.indexOf(str.trim()) >= 0
+  return str
 }
 
 /* 合法uri*/
@@ -26,4 +25,14 @@ export function validatAlphabets(str) {
   const reg = /^[A-Za-z]+$/
   return reg.test(str)
 }
+/* 手机号校验*/
+export function validatePhone(str) {
+  const reg = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/
+  return reg.test(str)
+}
 
+/* 密码校验*/
+export function validatePassword(str) {
+  const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/;
+  return reg.test(str)
+}

@@ -9,32 +9,17 @@
         <div style="text-align: center">
           <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
-        <h2 class="login-title color-main">mall-admin-web</h2>
-        <el-form-item prop="username">
-          <el-input name="username"
+        <h2 class="login-title color-main">速美官网后台管理系统</h2>
+        <el-form-item prop="name">
+          <el-input name="name"
                     type="text"
-                    v-model="loginForm.username"
+                    v-model="loginForm.name"
                     autoComplete="on"
                     placeholder="请输入用户名">
-          <span slot="prefix">
-            <svg-icon icon-class="user" class="color-main"></svg-icon>
-          </span>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input name="password"
-                    :type="pwdType"
-                    @keyup.enter.native="handleLogin"
-                    v-model="loginForm.password"
-                    autoComplete="on"
-                    placeholder="请输入密码">
-          <span slot="prefix">
-            <svg-icon icon-class="password" class="color-main"></svg-icon>
-          </span>
-            <span slot="suffix" @click="showPwd">
-            <svg-icon icon-class="eye" class="color-main"></svg-icon>
-          </span>
-          </el-input>
+           <el-input show-password  @keyup.enter.native="handleLogin" v-model="loginForm.password" placeholder="请输入密码"></el-input>         
         </el-form-item>
         <el-form-item style="margin-bottom: 60px">
           <el-button style="width: 100%" type="primary" :loading="loading" @click.native.prevent="handleLogin">
@@ -61,27 +46,21 @@
           callback()
         }
       };
-      const validatePass = (rule, value, callback) => {
-        if (value.length < 3) {
-          callback(new Error('密码不能小于3位'))
-        } else {
-          callback()
-        }
-      };
       return {
         loginForm: {
-          username: 'admin',
-          password: '123456',
+          name: '',
+          password: '',
         },
         loginRules: {
-          username: [{required: true, trigger: 'blur', validator: validateUsername}],
-          password: [{required: true, trigger: 'blur', validator: validatePass}]
+          name: [{required: true, trigger: 'blur', validator: validateUsername}],
+          password: [{required: true, message: '请输入密码', trigger: 'blur'}]
         },
         loading: false,
         pwdType: 'password',
         login_center_bg
       }
     },
+
     methods: {
       showPwd() {
         if (this.pwdType === 'password') {
@@ -91,17 +70,17 @@
         }
       },
       handleLogin() {
-        
         this.$refs.loginForm.validate(valid => {
           if (valid) {
-            // this.loading = true;
-            // this.$store.dispatch('Login', this.loginForm).then(() => {
-            //   this.loading = false;
-            //   this.$router.push({path: '/'})
-            // }).catch(() => {
-            //   this.loading = false
-            // })
-            this.$router.push({path: ''})
+            this.loading = true;
+            
+            this.$store.dispatch('Login', this.loginForm).then(() => {
+              this.loading = false;
+              this.$router.push({path: '/'})
+            }).catch(() => {
+              this.loading = false
+              this.netError = true;
+            })
           } else {
             console.log('参数验证不合法！');
             return false

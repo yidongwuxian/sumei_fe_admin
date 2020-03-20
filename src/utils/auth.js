@@ -1,15 +1,43 @@
-import Cookies from 'js-cookie'
-
 const TokenKey = 'loginToken'
+const UnameKey = 'user_Name'
+const RolesKey = 'menuRoles'
+const actKey   = 'actKey'
+const caseKey  = 'caseKey'
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return sessionStorage.getItem(TokenKey)
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  return sessionStorage.setItem(TokenKey, token)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return sessionStorage.removeItem(TokenKey)
+}
+
+//username
+export function getUserName() {
+  return sessionStorage.getItem(UnameKey)
+}
+
+export function setUserName(name) {
+  return sessionStorage.setItem(UnameKey, name)
+}
+
+export function removeUserName() {
+  return sessionStorage.removeItem(UnameKey)
+}
+
+//roles
+export function getRoles() {
+  return sessionStorage.getItem(RolesKey)
+}
+
+export function setRoles(name) {
+  return sessionStorage.setItem(RolesKey, name);
+}
+
+export function removeRoles() {
+  return sessionStorage.removeItem(RolesKey)
 }
