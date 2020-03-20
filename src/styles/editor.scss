@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
@@ -17,4 +18,25 @@
   width: 100%;
   height: 500px;
   margin-bottom: 60px;
+=======
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+
+.edit_container {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+.quill-editor{
+  width: 100%;
+  height: 500px;
+  margin-bottom: 60px;
+>>>>>>> 6a249e407b75d8374ffd6585539ce0b8e9b93aa1
 }

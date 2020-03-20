@@ -3,24 +3,44 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+const webpack = require("webpack")
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
+function getPath(env) {
+  if (env === "production") {
+    return config.build.assetsPublicPath
+  } else if (env === "test") {
+    return config.test.assetsPublicPath
+  } else {
+    return config.dev.assetsPublicPath
+  }
+}
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    'BaiduMap': 'BMap',
+    'vue': 'Vue',
+    'vuex': 'Vuex',
+    'vue-router': 'VueRouter',
+    'axios': 'axios',
+    'vue-quill-editor': 'VueQuillEditor',
+    'Quill':'quill',
+    $: "jquery",
+    'echarts': 'echarts'
+  },
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    filename: '[name].[hash]'+ '-build-' +new Date().getTime() +'.js',
+    publicPath: getPath(process.env.NODE_ENV)
+    // publicPath: process.env.NODE_ENV === 'production'
+    //   ? config.build.assetsPublicPath
+    //   : config.dev.assetsPublicPath
   },
   externals: {
     'vue': 'Vue',
@@ -47,8 +67,17 @@ module.exports = {
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [resolve('src/icons')],
+        options: {
+          symbolId: 'icon-[name]'
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
+        exclude: resolve('src/icons'),
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -83,5 +112,14 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+  　　new webpack.optimize.CommonsChunkPlugin('common.js'),
+  　　new webpack.ProvidePlugin({
+  　　　　jQuery: "jquery",
+         jquery: "jquery",
+         "window.jQuery": "jquery",
+  　　　　$: "jquery"
+  　　})
+  ]
 }

@@ -3,14 +3,56 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.3.7/lib/theme-chalk/index.css">
     <title>sumei_fe_admin</title>
+=======
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.core.css"/>
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.snow.css"/>
+    <link rel="stylesheet" href="/static/css/vue-quill-editor/v3.0.6/quill.bubble.css"/>
+    <script type="text/javascript">
+    function initScript(){
+      const protocolStr = document.location.protocol
+      switch (protocolStr) {
+        case 'https:':
+          window.HOST_TYPE = '2'
+          break
+        default:
+          break
+      }
+      var script = document.createElement("script");
+      script.src = "//api.map.baidu.com/getscript?v=2.0&ak=52c294eb080289588ff8768a503f2cc3";
+      document.body.appendChild(script);
+    }
+    window.onload = initScript; 
+    </script>
+    <title>速美超级家后台CMS管理系统</title>
+>>>>>>> 6a249e407b75d8374ffd6585539ce0b8e9b93aa1
   </head>
-  <body>
+  <body>  
     <div id="app"></div>
+<<<<<<< HEAD
     <script src="https://unpkg.com/vue@2.5.2/dist/vue.js"></script> 
     <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js"></script>
     <script src="https://unpkg.com/element-ui@2.3.7/lib/index.js"></script>
     <!-- built files will be auto injected -->
+=======
+    <script src="https://unpkg.com/vue@2.5.2/dist/vue.min.js"></script> 
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js"></script>
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+    <script src="/static/js/vue-quill-editor/v3.0.6/quill.min.js"></script>
+    <script src="/static/js/vue-quill-editor/v3.0.6/vue-quill-editor.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/echarts@4.2.1/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+      Vue.use(window.VueRouter);
+      Vue.use(window.VueQuillEditor);
+      Vue.prototype.$echarts = window.echarts;
+      Vue.prototype.$axios = window.axios;
+      Vue.prototype.$store = window.vuex;
+    </script>
+>>>>>>> 6a249e407b75d8374ffd6585539ce0b8e9b93aa1
   </body>
 </html>
+ 
